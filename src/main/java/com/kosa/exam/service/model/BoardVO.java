@@ -27,6 +27,7 @@ public class BoardVO implements GeneralModel {
 	private int viewCount;
 	private int pid;
 	private int level;
+	// 주석 함 시도함
 
 
 }
