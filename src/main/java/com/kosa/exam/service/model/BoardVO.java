@@ -28,6 +28,7 @@ public class BoardVO implements GeneralModel {
 	private int pid;
 	private int level;
 	// 주석 함 시도함
+	// 주석 함 시도함2
 
 
 }
