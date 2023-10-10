@@ -12,7 +12,7 @@
 			<tbody>
 			 	<tr>
 					<th>글번호</th>
-					<td>${board.boardNum}</td>
+					<td id="boardNum">${board.boardNum}</td>
 				</tr>
 				<tr>
 					<th>글제목</th>
@@ -44,19 +44,39 @@
 				<tr>
 					<th>댓글</th>
 					<td>
+					
 						<c:forEach var="comment" items="${comment}">
-						          <p><input type="hidden" name="commentNum"/></p>
-						          <p><span>${comment.cmemId}</span> | <span>${comment.modDate}</span></p>
-						          <p>${comment.content}</p>
+							<div id="commentItem" >
+							    <p><input type="hidden" name="commentNum" id="commentNum"/></p>
+							    <p><span id="cmemId">${comment.cmemId}</span> | <span id="modDate">${comment.modDate}</span></p>
+							    <p>${comment.content}</p>
+							</div>	
 						</c:forEach>	
+						
 					</td>
+					
+					<div id="commentList">
+				 	  	<div id="commentListDiv">
+				 	  	  	
+				 	  	</div>
+					</div>
+
+						
+					</td>
+					
+					<div id="commentList">
+				 	  	<div id="commentListDiv">
+				 	  	  	
+				 	  	</div>
+					</div>
+					
 				</tr>
 				<tr>
 					<th>댓글</th>
 					<td colspan="3" class="memo">
-						<div>
-							<input type="hidden" name="cmemId" value="admin" />
-							<input type="text" class="input" style="width:75%;" placeholder="댓글 작성하기" /><a href="" class="btn_s_grey mL5">저장</a>
+						<div id="commentInsert">
+							<input type="hidden" name="cmemId" id="cmemIdadmin" value="admin" />
+							<input type="text" class="commentContent" style="width:75%;" placeholder="댓글 작성하기" /><a href="" onclick="commentInsert()" class="btn_s_grey mL5">저장</a>
 						</div>
 					</td>
 				</tr>
@@ -92,6 +112,71 @@ modifyBtn.addEventListener('click', function() {
 });
 
 
+
+//댓글등록
+//댓글등록
+function commentInsert() {
+	
+	// 게시물의 board_num 가져오기
+	const boardNum = $("#boardNum").text();
+	const cmemId = $("#cmemIdadmin").val();
+	const commentContent = $(".commentContent").val();
+
+	console.log("boardNum ", boardNum);
+	console.log("cmemId ", cmemId);
+	console.log("commentContent", commentContent);
+	console.log("modDate ", modDate);
+	
+	const param = {
+			boardNum:  boardNum,
+			cmemId: cmemId,
+			content: commentContent,
+	};
+	
+	fetch("<c:url value='comment/register.do' />", {
+		method : "POST",
+		headers : {
+			"Content-Type" : "application/json; charset=UTF-8",
+		},
+		body : JSON.stringify(param),
+	})
+	.then((response) => response.json())
+	.then((json) => {
+		if(json.status) {
+			alert("댓글이 작성되었습니다.");
+			
+ 			const commentList = $("#commentList");
+			commentList.empty();
+			
+			const comment = json.comment;
+			console.log(comment);
+			
+			comments.forEach((comment) => {
+			console.log(">>>" + comment.content);
+			
+			const commentItem = $("#commentItem").clone();
+			commentItem.find(".commentContent").val(comment.content);
+			commentItem.find("#cmemId").val(comment.cmemId);
+			commentItem.find("#modDate").text(comment.modDate);
+			commentItem.find("#commentNum").text(comment.commentNum);
+			
+			console.log("comment.commentNum", comment.commentNum);
+			
+ 			commentItem.show();
+			commentList.append();
+			
+				
+			}
+			
+			) 
+			
+			
+		} else {
+			alert("댓글이 작성되지 않았습니다.");
+		}
+
+	});
+}
 
 
 

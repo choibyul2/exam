@@ -25,7 +25,7 @@
 	           (
 	             #{commentNum}
 	            ,#{boardNum}
-	            ,#{memId}
+	            ,#{cmemId}
 	            ,#{content}
 	           )
      
@@ -38,7 +38,7 @@
 			*
 		from comments
 		where board_num = #{boardNum}
-		order by reg_date DESC
+		order by comment_num DESC
     </select>
     
 		 

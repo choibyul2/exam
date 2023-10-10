@@ -29,7 +29,7 @@ public class CommentController extends PrtController {
 	
 	// 글 작성(POST)
 	@ResponseBody
-	@RequestMapping(value = "/commnet/register.do" , method = RequestMethod.POST)
+	@RequestMapping(value = "/comment/register.do" , method = RequestMethod.POST)
 	public Map<String, Object> register(@RequestBody CommentVO comment) throws Exception {
 		System.out.println("댓글 작성 컨트롤러 진입");
 		
@@ -39,7 +39,7 @@ public class CommentController extends PrtController {
 		if(status > 0) {      
 	         result.put("status", true);
 	         result.put("message", "댓글이 등록되었습니다.");
-	         result.put("comment", _commentService.insert(comment));
+	         result.put("comment", status);
 	      }else {
 	         result.put("status", false);
 	         result.put("message", "댓글이 등록되지 않았습니다.");   
